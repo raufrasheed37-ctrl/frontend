@@ -1,4 +1,14 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import { z } from "zod";
 import { useRouter } from "next/navigation";
+
+const loginSchema = z.object({
+  email: z.string().email("Invalid email"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+});
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -16,7 +26,7 @@ export default function Login() {
     }
 
     try {
-      const res = await fetch("https://https://auth-app-zg5k.onrender.com/api/auth/login", {
+      const res = await fetch("https://auth-app-zg5k.onrender.com/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -36,3 +46,34 @@ export default function Login() {
       alert("Something went wrong");
     }
   };
+
+  return (
+    <div className="container">
+      <form className="card" onSubmit={handleSubmit}>
+        <h2 className="title">Login</h2>
+
+        <input
+          className="input"
+          placeholder="Email"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <input
+          type="password"
+          className="input"
+          placeholder="Password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <button className="button">Login</button>
+
+        <p style={{ textAlign: "center", marginTop: "10px" }}>
+          Don’t have an account?{" "}
+          <Link href="/register" className="link">
+            Register
+          </Link>
+        </p>
+      </form>
+    </div>
+  );
+}
