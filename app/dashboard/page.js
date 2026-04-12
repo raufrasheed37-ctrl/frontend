@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Navbar from "@/components/Navbar";
 
 export default function Dashboard() {
   const [user, setUser] = useState(null);
@@ -31,6 +32,8 @@ export default function Dashboard() {
   }, []);
 
   return (
+    <>
+    <Navbar/>
     <div style={{ textAlign: "center", marginTop: "100px" }}>
       <h1>Dashboard</h1>
 
