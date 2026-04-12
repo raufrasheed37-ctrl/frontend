@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Navbar from "@/components/Navbar";
 import { z } from "zod";
 
 const registerSchema = z.object({
@@ -27,6 +28,8 @@ export default function Register() {
   };
 
   return (
+    <>
+    <Navbar/>
     <div className="container">
       <form className="card" onSubmit={handleSubmit}>
         
