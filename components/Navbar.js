@@ -10,7 +10,7 @@ export default function Navbar() {
 
   const logout = () => {
     localStorage.removeItem("token");
-    window.location.href = "/login";
+    window.location.href = "/";
   };
 
   let links = [];
@@ -49,7 +49,7 @@ export default function Navbar() {
         item.action ? (
           <button
             key={index}
-            className="nav-item"
+            className="nav-item logout-btn"
             onMouseEnter={() => setActive(index)}
             onClick={item.action}
           >
@@ -67,13 +67,6 @@ export default function Navbar() {
         )
       )}
 
-      <span
-        className="nav-indicator"
-        style={{
-          width: `${100 / links.length}%`,
-          transform: `translateX(${active * 100}%)`,
-        }}
-      ></span>
     </nav>
   );
 }
