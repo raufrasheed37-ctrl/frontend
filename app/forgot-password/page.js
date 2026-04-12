@@ -1,36 +1,61 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function ForgotPassword() {
-  const [email, setEmail] = useState("");
   const [step, setStep] = useState(1);
+  const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
+  // STEP 1: SEND OTP
   const sendOtp = async () => {
-    await fetch("https://auth-app-zg5k.onrender.com/api/auth/send-otp", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email }),
-    });
+    try {
+      const res = await fetch("https://auth-app-zg5k.onrender.com/api/auth/send-otp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
 
-    setStep(2);
+      const data = await res.json();
+
+      if (res.ok) {
+        alert("OTP sent to your email");
+        setStep(2); // move to next step
+      } else {
+        alert(data.message || "User not found");
+      }
+    } catch (err) {
+      alert("Error sending OTP");
+    }
   };
 
+  // STEP 2: RESET PASSWORD
   const resetPassword = async () => {
-    const res = await fetch("https://auth-app-zg5k.onrender.com/api/auth/reset-password", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, otp, password }),
-    });
+    try {
+      const res = await fetch("https://auth-app-zg5k.onrender.com/api/auth/reset-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, otp, password }),
+      });
 
-    const data = await res.json();
-    alert(data.message || "Done");
+      const data = await res.json();
+
+      if (res.ok) {
+        alert("Password reset successful");
+        router.push("/login"); // redirect back
+      } else {
+        alert(data.message || "Invalid OTP");
+      }
+    } catch (err) {
+      alert("Error resetting password");
+    }
   };
 
   return (
@@ -43,7 +68,7 @@ export default function ForgotPassword() {
           <>
             <input
               className="input"
-              placeholder="Enter email"
+              placeholder="Enter your email"
               onChange={(e) => setEmail(e.target.value)}
             />
 
