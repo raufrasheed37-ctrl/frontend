@@ -32,17 +32,28 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <>
-    <Navbar/>
-    <div style={{ textAlign: "center", marginTop: "100px" }}>
-      <h1>Dashboard</h1>
+  <>
+    <Navbar />
 
-      {user ? (
-        <p>Welcome, {user.email}</p>
-      ) : (
-        <p>Loading...</p>
-      )}
+    <div className="dashboard-container">
+      <div className="dashboard-card">
+        <h1>Dashboard</h1>
+
+        {user ? (
+          <>
+            <p className="welcome-text">
+              Good Day 
+            </p>
+
+            <p className="email">
+  {user.email.slice(0, 4).toUpperCase()}
+</p>
+          </>
+        ) : (
+          <p>Loading...</p>
+        )}
+      </div>
     </div>
-      </>
-  );
+  </>
+);
 }
