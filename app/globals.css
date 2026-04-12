@@ -52,21 +52,6 @@ body {
   transition: transform 0.3s ease;
 }
 
-.nav-item:nth-child(1):hover ~ .nav-indicator {
-  transform: translateX(0%);
-  background: #60a5fa; /* Login */
-}
-
-.nav-item:nth-child(2):hover ~ .nav-indicator {
-  transform: translateX(100%);
-  background: #f6fa8b; 
-}
-
-.nav-item:nth-child(3):hover ~ .nav-indicator {
-  transform: translateX(200%);
-  background: #86d334; 
-}
-
 .hero {
   position: absolute;
   top: 50%;
