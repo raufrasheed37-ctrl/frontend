@@ -80,13 +80,13 @@ export default function Login() {
             Register
           </Link>
         </p>
-      </form>
-       <p style={{ textAlign: "center", marginTop: "10px" }}>
+
+      <p style={{ textAlign: "center", marginTop: "10px" }}>
   <Link href="/forgot-password" className="link">
     Forgot password?
   </Link>
 </p>
-            
+      </form>
     </div>
     </>
   );
