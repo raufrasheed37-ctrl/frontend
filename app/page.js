@@ -18,7 +18,7 @@ export default function Home() {
       <Navbar />
 
       <div className="hero">
-        <h1>Welcomety Back!!!</h1>
+        <h1>Welcome Back!!!</h1>
 
         <p>
           Status: <b>{isAuthenticated ? "Logged In" : "Not Logged In"}</b>
