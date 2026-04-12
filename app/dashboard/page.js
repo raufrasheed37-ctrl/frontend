@@ -42,7 +42,7 @@ export default function Dashboard() {
 
         {user && (
           <div className="user-box">
-            <p className="greeting">Good Day</p>
+            <p className="greeting">Welcome back 👋</p>
             <p className="username">
               {user.email.slice(0, 4).toUpperCase()}
             </p>
