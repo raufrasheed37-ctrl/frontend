@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { z } from "zod";
+import Navbar from "@/components/Navbar";
 import { useRouter } from "next/navigation";
 
 const loginSchema = z.object({
@@ -48,6 +49,8 @@ export default function Login() {
   };
 
   return (
+    <>
+    <Navbar/>
     <div className="container">
       <form className="card" onSubmit={handleSubmit}>
         <h2 className="title">Login</h2>
