@@ -83,7 +83,7 @@ export default function Login() {
 
       <p style={{ textAlign: "center", marginTop: "10px" }}>
   <Link href="/forgot-password" className="link">
-    Forgot password?
+    Forgot password
   </Link>
 </p>
       </form>
