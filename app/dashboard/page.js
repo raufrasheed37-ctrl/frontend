@@ -37,21 +37,18 @@ export default function Dashboard() {
 
     <div className="dashboard-container">
       <div className="dashboard-card">
-        <h1>Dashboard</h1>
+        
+        <h1 className="dashboard-title">Dashboard</h1>
 
-        {user ? (
-          <>
-            <p className="welcome-text">
-              Good Day 
+        {user && (
+          <div className="user-box">
+            <p className="greeting">Good Day</p>
+            <p className="username">
+              {user.email.slice(0, 4).toUpperCase()}
             </p>
-
-            <p className="email">
-  {user.email.slice(0, 4).toUpperCase()}
-</p>
-          </>
-        ) : (
-          <p>Loading...</p>
+          </div>
         )}
+
       </div>
     </div>
   </>
