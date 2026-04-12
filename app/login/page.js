@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { z } from "zod";
+import useAuthStore from "@/store/authStore";
 import Navbar from "@/components/Navbar";
 import { useRouter } from "next/navigation";
 
@@ -38,8 +39,11 @@ export default function Login() {
       const data = await res.json();
 
       if (data.token) {
-        localStorage.setItem("token", data.token);
-        router.push("/dashboard");
+  localStorage.setItem("token", data.token);
+
+  useAuthStore.getState().hydrate();
+
+  router.push("/dashboard");
       } else {
         alert(data.message || "Login failed");
       }
