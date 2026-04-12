@@ -43,5 +43,6 @@ export default function Dashboard() {
         <p>Loading...</p>
       )}
     </div>
+      </>
   );
 }
