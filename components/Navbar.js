@@ -17,7 +17,6 @@ export default function Navbar() {
 
   if (pathname === "/") {
     links = [
-      { name: "Login", href: "/login" },
       { name: "Register", href: "/register" },
       { name: "Dashboard", href: "/dashboard" },
     ];
