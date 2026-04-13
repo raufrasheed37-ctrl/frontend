@@ -3,13 +3,14 @@
 import { useState } from "react";
 import Link from "next/link";
 import { z } from "zod";
-import useAuthStore from "@/store/authStore";
 import Navbar from "@/components/Navbar";
 import { useRouter } from "next/navigation";
+import useAuthStore from "@/store/authStore";
+import api from "@/utils/api";
 
 const loginSchema = z.object({
   email: z.string().email("Invalid email"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  password: z.string().min(6),
 });
 
 export default function Login() {
@@ -28,66 +29,57 @@ export default function Login() {
     }
 
     try {
-      const res = await fetch("https://auth-app-zg5k.onrender.com/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await res.json();
+      const res = await api.post("/auth/login", { email, password });
+      const data = res.data;
 
       if (data.token) {
-  localStorage.setItem("token", data.token);
-
-  useAuthStore.getState().hydrate();
-
-  router.push("/dashboard");
+        useAuthStore.getState().login(data.user, data.token);
+        router.push("/dashboard");
       } else {
         alert(data.message || "Login failed");
       }
-    } catch (error) {
-      alert("Something went wrong");
+    } catch (err) {
+      alert(err.response?.data?.message || "Error");
     }
   };
 
   return (
     <>
-    <Navbar/>
-    <div className="container">
-      <form className="card" onSubmit={handleSubmit}>
-        <h2 className="title">Login</h2>
+      <Navbar />
 
-        <input
-          className="input"
-          placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
-        />
+      <div className="container">
+        <form className="card" onSubmit={handleSubmit}>
+          <h2 className="title">Login</h2>
 
-        <input
-          type="password"
-          className="input"
-          placeholder="Password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          <input
+            className="input"
+            placeholder="Email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-        <button className="button">Login</button>
+          <input
+            type="password"
+            className="input"
+            placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-        <p style={{ textAlign: "center", marginTop: "10px" }}>
-          Don’t have an account?{" "}
-          <Link href="/register" className="link">
-            Register
-          </Link>
-        </p>
+          <button className="button">Login</button>
 
-      <p style={{ textAlign: "center", marginTop: "10px" }}>
-  <Link href="/forgot-password" className="link">
-    Forgot password
-  </Link>
-</p>
-      </form>
-    </div>
+          <p style={{ textAlign: "center", marginTop: "10px" }}>
+            Don’t have an account?{" "}
+            <Link href="/register" className="link">
+              Register
+            </Link>
+          </p>
+
+          <p style={{ textAlign: "center", marginTop: "10px" }}>
+            <Link href="/forgot-password" className="link">
+              Forgot password
+            </Link>
+          </p>
+        </form>
+      </div>
     </>
   );
 }
