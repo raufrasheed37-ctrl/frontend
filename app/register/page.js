@@ -4,17 +4,20 @@ import { useState } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import { z } from "zod";
+import { useRouter } from "next/navigation";
+import api from "@/utils/api";
 
 const registerSchema = z.object({
-  email: z.string().email("Invalid email"),
+  email: z.string().email(),
   password: z.string().min(6),
 });
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const result = registerSchema.safeParse({ email, password });
@@ -24,41 +27,47 @@ export default function Register() {
       return;
     }
 
-    alert("Register ready");
+    try {
+      await api.post("/auth/register", { email, password });
+
+      alert("Registered successfully");
+      router.push("/login");
+    } catch (err) {
+      alert(err.response?.data?.message || "Error");
+    }
   };
 
   return (
     <>
-    <Navbar/>
-    <div className="container">
-      <form className="card" onSubmit={handleSubmit}>
-        
-        <h2 className="title">Register</h2>
+      <Navbar />
 
-        <input
-          className="input"
-          placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
-        />
+      <div className="container">
+        <form className="card" onSubmit={handleSubmit}>
+          <h2 className="title">Register</h2>
 
-        <input
-          type="password"
-          className="input"
-          placeholder="Password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          <input
+            className="input"
+            placeholder="Email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-        <button className="button">Register</button>
+          <input
+            type="password"
+            className="input"
+            placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-        <p style={{ textAlign: "center", marginTop: "10px" }}>
-  Already have an account?{" "}
-  <Link href="/login" className="link">
-    Login
-  </Link>
-</p>
+          <button className="button">Register</button>
 
-      </form>
-    </div>
+          <p style={{ textAlign: "center", marginTop: "10px" }}>
+            Already have an account?{" "}
+            <Link href="/login" className="link">
+              Login
+            </Link>
+          </p>
+        </form>
+      </div>
     </>
   );
 }
