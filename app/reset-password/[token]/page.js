@@ -36,6 +36,8 @@ export default function ResetPassword() {
   };
 
   return (
+    <>
+    <Navbar/>
     <div className="container">
       <div className="card">
 
@@ -54,5 +56,6 @@ export default function ResetPassword() {
 
       </div>
     </div>
+    </>
   );
 }
