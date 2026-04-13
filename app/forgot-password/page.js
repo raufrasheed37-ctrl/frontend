@@ -21,9 +21,9 @@ export default function ForgotPassword() {
 
       const data = await res.json();
 
-      // 👇 show reset link (since you're on phone)
+      // ✅ AUTO REDIRECT (FIXED)
       if (data.resetUrl) {
-        alert(data.resetUrl);
+        window.location.href = data.resetUrl;
       } else {
         alert(data.message || "Request sent");
       }
