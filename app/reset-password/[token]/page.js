@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Navbar from "@/components/Navbar";
 import { useRouter, useParams } from "next/navigation";
 
 export default function ResetPassword() {
